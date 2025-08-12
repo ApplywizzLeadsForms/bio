@@ -128,47 +128,67 @@ export default function InstagramReferralForm({ reelSource = "Mounica case study
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="firstName">First Name *</Label>
-              <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Enter your first name" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name *</Label>
-              <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Enter your last name" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address *</Label>
-              <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number *</Label>
-              <PhoneInput
-                country={'us'}
-                value={formData.phone}
-                onChange={handlePhoneChange}
-                inputProps={{ name: 'phone', id: 'phone', required: true }}
-                containerClass="phone-input-container rounded-md"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="country">Country *</Label>
-              <Select onValueChange={handleSelectCountry} value={formData.country}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your country" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Array.from(new Set(countries)).map((country) => (
-                    <SelectItem key={country} value={country}>{country}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <input type="hidden" name="source" value={formData.source} />
-            <Button type="submit" className="w-full bg-blue-500" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
-            </Button>
-          </form>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {/* First name */}
+    <div className="space-y-2 md:col-span-2">
+      <Label htmlFor="firstName">First Name *</Label>
+      <Input id="firstName" name="firstName" value={formData.firstName}
+             onChange={handleChange} placeholder="Enter your first name" required />
+    </div>
 
+    {/* Last name */}
+    <div className="space-y-2 md:col-span-2">
+      <Label htmlFor="lastName">Last Name *</Label>
+      <Input id="lastName" name="lastName" value={formData.lastName}
+             onChange={handleChange} placeholder="Enter your last name" required />
+    </div>
+
+    {/* Email (full width) */}
+    <div className="space-y-2 md:col-span-2">
+      <Label htmlFor="email">Email Address *</Label>
+      <Input id="email" name="email" type="email" value={formData.email}
+             onChange={handleChange} placeholder="Enter your email address" required />
+    </div>
+
+    {/* Phone */}
+    <div className="space-y-2 md:col-span-2">
+      <Label htmlFor="phone">Phone Number *</Label>
+      <PhoneInput
+        country="us"
+        value={formData.phone}
+        onChange={handlePhoneChange}
+        inputProps={{ name: 'phone', id: 'phone', required: true }}
+        // --- key bits for alignment ---
+        containerClass="w-full"
+        inputClass="!w-full !h-10 !text-sm !bg-background !border !border-input !rounded-md !pl-12 focus:!outline-none focus:!ring-2 focus:!ring-ring"
+        buttonClass="!h-10 !bg-background !border !border-input !rounded-l-md"
+        dropdownClass="!bg-popover !text-popover-foreground"
+        enableSearch
+                countryCodeEditable={false}
+      />
+    </div>
+
+    {/* Country */}
+    <div className="space-y-2 md:col-span-2">
+      <Label htmlFor="country">Country *</Label>
+      <Select onValueChange={handleSelectCountry} value={formData.country}>
+        <SelectTrigger className="h-10">
+          <SelectValue placeholder="Select your country" />
+        </SelectTrigger>
+        <SelectContent>
+          {Array.from(new Set(countries)).map((c) => (
+            <SelectItem key={c} value={c}>{c}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  </div>
+
+  <input type="hidden" name="source" value={formData.source} />
+  <Button type="submit" className="w-full bg-blue-500" disabled={isSubmitting}>
+    {isSubmitting ? 'Submitting...' : 'Submit'}
+  </Button>
+</form>
           {/* LOADING ANIMATION */}
           {isSubmitting && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm pointer-events-auto">
