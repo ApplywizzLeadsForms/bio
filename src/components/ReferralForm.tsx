@@ -50,7 +50,7 @@ const countries = [
   "Zambia", "Zimbabwe"
 ];
 
-export default function InstagramReferralForm({ reelSource = "Mounica case study" }: { reelSource: string }) {
+export default function InstagramReferralForm({ reelSource = "bio" }: { reelSource: string }) {
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
